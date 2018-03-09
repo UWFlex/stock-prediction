@@ -1,9 +1,9 @@
 # Stock Prediction
 Given today's stock data, predict whether the closing price tommorow will be higher or lower.
+[![Build Status](https://travis-ci.org/UWCESEDUO/stock-prediction.svg?branch=master)](https://travis-ci.org/UWCESEDUO/stock-prediction)
 
 ## Workflow/Methodology
-1. Data fetching and preprocessing
-fetch stock data from ![alphavantage](https://www.alphavantage.co) 
+1. Data fetching and preprocessing 
 2. Data Normalization
 3. Analysis of various supervised learning methods
 4. build AWS pipeline
