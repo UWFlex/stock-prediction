@@ -14,13 +14,14 @@ f.closed
 
 formatted_data = str(read_data).split()
 
-paramList = [constants.TIME_SERIES_DAILY_ADJUSTED,
-'symbol=' + formatted_data[0],
-constants.OUTPUTSIZE_COMPACT,
-constants.DATATYPE_CSV,
-constants.API_KEY]
+for item in formatted_data:
+    paramList = [constants.TIME_SERIES_DAILY_ADJUSTED,
+    'symbol=' + item,
+    constants.OUTPUTSIZE_COMPACT,
+    constants.DATATYPE_CSV,
+    constants.API_KEY]
 
-url = urlBuilder(paramList)
-print (url)
+    url = urlBuilder(paramList)
+    print (url)
 
-urllib.request.urlretrieve(url,'outputs/test')
+    urllib.request.urlretrieve(url,'outputs/test_' + item + '.csv')
