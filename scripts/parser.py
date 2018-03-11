@@ -1,5 +1,9 @@
 import urllib.request
 import constants
+import os
+
+basePath = os.path.dirname(os.path.realpath('__file__'))
+print(basePath)
 
 
 def urlBuilder(list) -> str:
@@ -10,7 +14,9 @@ def urlBuilder(list) -> str:
     return url
 
 
-with open('inputs/symbols', 'r') as f:
+# x = os.path.join(basePath, 'inputs\\symbol')
+# print(x)
+with open(os.path.join(basePath, 'inputs\\symbols'), 'r') as f:
     read_data = f.read()
 f.closed
 
@@ -25,4 +31,6 @@ for item in formatted_data:
     url = urlBuilder(paramList)
     print(url)
 
-    urllib.request.urlretrieve(url, 'outputs/test_' + item + '.csv')
+    urllib.request.urlretrieve(
+        url, os.path.join(basePath,
+                          'outputs\\test\\raw\\test_' + item + '.csv'))
