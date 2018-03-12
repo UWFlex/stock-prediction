@@ -1,6 +1,7 @@
 """driver module"""
 import sys
 import getopt
+import fetch_stock_data
 
 def main(argv):
     """driver method"""
@@ -16,6 +17,8 @@ def main(argv):
             dev = False
     if dev:
         print("Running in development mode")
+
+    fetch_stock_data.fetch('input/symbols', 'output/dev/raw')
 
 if __name__ == "__main__":
     main(sys.argv[1:])
