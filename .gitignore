@@ -105,3 +105,5 @@ ENV/
 .vscode/*
 .history
 
+# generated csv
+output/**/*.csv

@@ -21,8 +21,8 @@ def fetch(symbols_file, output_path):
             ]
 
             url = utils.url_builder(constants.BASEURL, param_list)
-            urllib.request.urlretrieve(url, utils.format_path(output_path) + item + '.csv')
-            print('fetched ' + utils.format_path(output_path) + item + '.csv')
+            urllib.request.urlretrieve(url, utils.format_path(output_path) + '/' + item + '.csv')
+            print('fetched ' + utils.format_path(output_path) + '/' + item + '.csv')
 
 if __name__ == "__main__":
     fetch(str(sys.argv[1]), str(sys.argv[2]))
