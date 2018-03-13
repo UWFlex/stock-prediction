@@ -21,6 +21,7 @@ def fetch(symbols_file, output_path):
             ]
 
             url = utils.url_builder(constants.BASEURL, param_list)
+            utils.make_dir_if_not_exists(output_path)
             urllib.request.urlretrieve(url, utils.format_path(output_path) + '/' + item + '.csv')
             print('fetched ' + utils.format_path(output_path) + '/' + item + '.csv')
 
