@@ -11,3 +11,10 @@ def get_csv_file_list_in_dir(directory):
     '''generates a list of csv files in given directory'''
     filenames = os.listdir(directory)
     return [filename for filename in filenames if filename.endswith('csv')]
+
+def url_builder(url, params):
+    """formats url"""
+    separator = '&'
+    rest_of_url = separator.join(params)
+    url = url + rest_of_url
+    return url

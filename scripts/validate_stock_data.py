@@ -19,7 +19,6 @@ def validate_one(input_file, output_file):
 def validate(input_dir, output_dir):
     '''calls validate_one on all csv files in input_dir'''
     files = utils.get_csv_file_list_in_dir(input_dir)
-    print(files)
     for csv_file_name in files:
         validate_one(join(input_dir, csv_file_name), join(output_dir, csv_file_name))
 
