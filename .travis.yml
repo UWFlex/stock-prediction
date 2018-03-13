@@ -1,5 +1,8 @@
 language: python
 python:
 - "3.6"
-script: 
-- python hello.py
+install:
+- pip install pylint
+script:
+- pylint scripts/*.py
+- python scripts/run.py
