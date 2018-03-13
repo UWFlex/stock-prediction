@@ -18,3 +18,9 @@ def url_builder(url, params):
     rest_of_url = separator.join(params)
     url = url + rest_of_url
     return url
+
+def make_dir_if_not_exists(path_from_root):
+    '''creates directory if not exists'''
+    directory = format_path(path_from_root)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
