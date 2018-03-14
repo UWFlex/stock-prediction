@@ -3,6 +3,7 @@ import csv
 import sys
 import utils
 
+
 def write(csv_relative_path, data):
     '''csv_relative_path is the path to the csv file from project root'''
     csv_file_path = utils.format_path(csv_relative_path)
@@ -11,5 +12,6 @@ def write(csv_relative_path, data):
         for row in data:
             writer.writerow(row)
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     print(write(sys.argv[1], sys.argv[2]))

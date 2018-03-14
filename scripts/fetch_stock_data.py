@@ -1,11 +1,12 @@
-"""fetches stock data from api"""
+'''fetches stock data from api'''
 import urllib.request
 import sys
 import constants
 import utils
 
+
 def fetch(symbols_file, output_path):
-    """fetches stock data from api, then outputs as raw csv file"""
+    '''fetches stock data from api, then outputs as raw csv file'''
 #    base_path = os.path.dirname(os.path.realpath('__file__'))
 
     # read from symbols file
@@ -22,8 +23,10 @@ def fetch(symbols_file, output_path):
 
             url = utils.url_builder(constants.BASEURL, param_list)
             utils.make_dir_if_not_exists(output_path)
-            urllib.request.urlretrieve(url, utils.format_path(output_path) + '/' + item + '.csv')
+            urllib.request.urlretrieve(url, utils.format_path(
+                output_path) + '/' + item + '.csv')
             print('fetched ' + utils.format_path(output_path) + '/' + item + '.csv')
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     fetch(str(sys.argv[1]), str(sys.argv[2]))
