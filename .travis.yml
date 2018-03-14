@@ -5,3 +5,4 @@ install:
 - pip install pylint
 script:
 - pylint scripts/*.py
+- python scripts/run.py
