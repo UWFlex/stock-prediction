@@ -1,7 +1,5 @@
 '''fetches stock data from api'''
-import urllib.request
 import sys
-import json
 import pandas as pd
 import constants
 import utils
@@ -19,14 +17,17 @@ def fetch(symbol, config):
         'apikey=' + config['apikey']
     ]
 
-    raw_url = utils.url_builder(constants.BASEURL, param_list)
+    # param_list = [
+    #     constants.TIME_SERIES_DAILY_ADJUSTED, 'symbol=' + symbol,
+    #     constants.OUTPUTSIZE_COMPACT, constants.DATATYPE_JSON, constants.API_KEY
+    # ]
 
-    with urllib.request.urlopen(raw_url) as url:
-        data = json.loads(url.read().decode())
-        dataframe = pd.DataFrame(data['Time Series (Daily)'])
-        # print(dataframe)
-        return dataframe
+    url = utils.url_builder(constants.BASEURL, param_list)
 
+    json_data = utils.get_json_from_url(url)
+    dataframe = pd.DataFrame(list(json_data.values())[1])
+    # print(dataframe)
+    return dataframe
 
 if __name__ == '__main__':
     fetch(str(sys.argv[1]), sys.argv[2])
