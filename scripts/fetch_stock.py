@@ -1,6 +1,7 @@
 '''fetches stock data from api'''
 import sys
 import pandas as pd
+import re
 import constants
 import utils
 
@@ -21,6 +22,8 @@ def fetch(symbol, config):
 
     json_data = utils.get_json_from_url(url)
     dataframe = pd.DataFrame(list(json_data.values())[1]).transpose()
+    pattern = re.compile('[a-zA-Z]+')
+    dataframe.columns = dataframe.columns.map(lambda a: pattern.search(a).group())
     # print(dataframe)
     return dataframe
 
