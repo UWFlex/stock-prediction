@@ -17,11 +17,6 @@ def fetch(symbol, config):
         'apikey=' + config['apikey']
     ]
 
-    # param_list = [
-    #     constants.TIME_SERIES_DAILY_ADJUSTED, 'symbol=' + symbol,
-    #     constants.OUTPUTSIZE_COMPACT, constants.DATATYPE_JSON, constants.API_KEY
-    # ]
-
     url = utils.url_builder(constants.BASEURL, param_list)
 
     json_data = utils.get_json_from_url(url)
