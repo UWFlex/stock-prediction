@@ -12,9 +12,9 @@ def fetch(symbol, config):
     param_list = [
         'function=' + config['function'],
         'symbol=' + symbol,
-        'outputsize=' + config['outputsize'],
-        'datatype=' + config['datatype'],
-        'apikey=' + config['apikey']
+        'outputsize=' + config['output_size'],
+        'datatype=' + config['data_type'],
+        'apikey=' + config['api_key']
     ]
 
     url = utils.url_builder(constants.BASEURL, param_list)

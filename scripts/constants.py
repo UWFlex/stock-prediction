@@ -1,10 +1,15 @@
 '''constants'''
 
 # fetch script constants
-API_KEY = 'apikey=NHX8KHJFCBEJFJ7P'
 BASEURL = 'https://www.alphavantage.co/query?'
-TIME_SERIES_DAILY_ADJUSTED = 'function=TIME_SERIES_DAILY_ADJUSTED'
-DATATYPE_JSON = 'datatype=json'
-DATATYPE_CSV = 'datatype=csv'
-OUTPUTSIZE_COMPACT = 'outputsize=compact'
-OUTPUTSIZE_FULL = 'outputsize=full'
+API_KEY = 'NHX8KHJFCBEJFJ7P'
+
+INTERVAL = 'daily'
+TIME_PERIOD = '10'
+SERIES_TYPE = 'close'
+
+TIME_SERIES_DAILY_ADJUSTED = 'TIME_SERIES_DAILY_ADJUSTED'
+DATATYPE_JSON = 'json'
+DATATYPE_CSV = 'csv'
+OUTPUTSIZE_COMPACT = 'compact'
+OUTPUTSIZE_FULL = 'full'
