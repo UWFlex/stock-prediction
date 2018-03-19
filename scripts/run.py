@@ -2,7 +2,7 @@
 import sys
 import getopt
 import fetch_combined_data
-import validate_stock_data
+# import validate_stock_data
 
 
 def main(argv):

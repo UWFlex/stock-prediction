@@ -1,7 +1,7 @@
 '''fetches stock data from api'''
 import sys
-import pandas as pd
 import re
+import pandas as pd
 import constants
 import utils
 
