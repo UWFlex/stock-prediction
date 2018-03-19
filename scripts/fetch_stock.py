@@ -20,7 +20,7 @@ def fetch(symbol, config):
     url = utils.url_builder(constants.BASEURL, param_list)
 
     json_data = utils.get_json_from_url(url)
-    dataframe = pd.DataFrame(list(json_data.values())[1])
+    dataframe = pd.DataFrame(list(json_data.values())[1]).transpose()
     # print(dataframe)
     return dataframe
 
