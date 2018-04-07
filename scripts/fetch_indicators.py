@@ -24,7 +24,11 @@ def fetch(indicator, symbol, config):
 
     json_data = utils.get_json_from_url(url)
 
-    dataframe = pd.DataFrame(list(json_data.values())[1]).transpose()
+    dataframe = {}
+    try:
+        dataframe = pd.DataFrame(list(json_data.values())[1]).transpose()
+    except IndexError:
+        dataframe = pd.DataFrame()
 
     return dataframe
 

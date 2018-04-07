@@ -26,11 +26,12 @@ def main(argv):
             fetch_combined_data.fetch(
                 'input/symbols',
                 'input/indicators',
+                'output/raw'
             )
 
     elapsed = time.time() - start
 
-    print('time elapsed: ' + str(elapsed))
+    print('time elapsed: ' + str(round(elapsed, 2)) + " seconds")
     print('-----program finished-----')
 
 

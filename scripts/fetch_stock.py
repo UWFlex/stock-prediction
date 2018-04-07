@@ -8,7 +8,7 @@ import utils
 def fetch(symbol, config):
     '''fetches stock data from api, return as a pandas dataframe'''
 
-    print('-----fetching stock data for ' + symbol + '-----')
+    print('***fetching stock data for ' + symbol + '***')
 
     # fetch stock data for a symbol
     param_list = [
@@ -22,7 +22,14 @@ def fetch(symbol, config):
     url = utils.url_builder(constants.BASEURL, param_list)
 
     json_data = utils.get_json_from_url(url)
-    dataframe = pd.DataFrame(list(json_data.values())[1]).transpose()
+    dataframe = {}
+
+    try:
+        dataframe = pd.DataFrame(list(json_data.values())[1]).transpose()
+    except IndexError:
+        print(json_data)
+        dataframe = pd.DataFrame()
+
     pattern = re.compile('[a-zA-Z]+')
     dataframe.columns = dataframe.columns.map(lambda a: pattern.search(a).group())
     # print(dataframe)

@@ -10,7 +10,7 @@ import fetch_stock
 import fetch_indicators
 
 
-def fetch(symbols_file, indicators_file):
+def fetch(symbols_file, indicators_file, output_path):
     '''fetches stock data combined with technical indicators, output as csv'''
 
     # read from symbols file
@@ -67,18 +67,20 @@ def fetch(symbols_file, indicators_file):
 
         stock_indicators_joined.index.name = 'date'
 
+        # last observed carries forward
+        stock_indicators_joined.fillna(method='pad', inplace=True)
+
         # print(stock_indicators_joined)
 
         print('fetched and joined data for ' + stock)
 
+        formatted_output_path = utils.format_path(output_path)
+        utils.make_dir_if_not_exists(output_path)
+        stock_indicators_joined.to_csv(formatted_output_path + '/' + stock + '.csv')
+        print('saved csv file to ' + formatted_output_path + '/' + stock + '.csv')
+
         elapsed = time.time() - start
-        print('time elapsed: ' + str(elapsed))
-
-        return stock_indicators_joined
-        # formatted_output_path = utils.format_path(output_path)
-        # utils.make_dir_if_not_exists(output_path)
-        # stock_indicators_joined.to_csv(formatted_output_path + '/' + stock + '.csv')
-
+        print('time elapsed: ' + str(round(elapsed, 2)) + " seconds")
 
 if __name__ == '__main__':
-    fetch(str(sys.argv[1]), str(sys.argv[2]))
+    fetch(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
