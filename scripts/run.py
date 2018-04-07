@@ -2,11 +2,7 @@
 import sys
 import getopt
 import time
-import pandas as pd
 import fetch_combined_data
-import plot
-# import validate_stock_data
-
 
 def main(argv):
     '''driver method'''
@@ -25,7 +21,7 @@ def main(argv):
 
 
     # run pipeline in order according to command line options
-    if '-f' in single_opt or '--fetch' in single_opt:
+    if '-f' or '--fetch' in single_opt:
         print('-----fetching new data-----')
         # fetch
         fetch_combined_data.fetch(
