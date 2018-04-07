@@ -2,7 +2,9 @@
 import sys
 import getopt
 import time
+import pandas as pd
 import fetch_combined_data
+import plot
 # import validate_stock_data
 
 
@@ -11,7 +13,7 @@ def main(argv):
     start = time.time()
 
     try:
-        opts, _ = getopt.getopt(argv, 'f', ['fetch'])
+        opts, _ = getopt.getopt(argv, 'ft', ['fetch'])
     except getopt.GetoptError:
         print('run.py')
         sys.exit(2)
@@ -19,15 +21,19 @@ def main(argv):
     print('-----command line options-----')
     print(opts)
 
-    for opt, _ in opts:
-        if opt in ('-f', '--fetch'):
-            print('-----fetching new data-----')
-            # fetch
-            fetch_combined_data.fetch(
-                'input/symbols',
-                'input/indicators',
-                'output/raw'
-            )
+    single_opt = [opt[0] for opt in opts]
+
+
+    # run pipeline in order according to command line options
+    if '-f' in single_opt or '--fetch' in single_opt:
+        print('-----fetching new data-----')
+        # fetch
+        fetch_combined_data.fetch(
+            'input/symbols',
+            'input/indicators',
+            'output/raw'
+        )
+
 
     elapsed = time.time() - start
 

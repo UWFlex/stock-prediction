@@ -1,11 +1,12 @@
 '''common util functions'''
 import os
+from os.path import dirname, abspath
 import urllib.request
 import json
 
 def format_path(path_from_root) -> str:
     '''generates absolute path from relative path'''
-    base_path = os.path.dirname(os.path.realpath('__file__'))
+    base_path = abspath(dirname(dirname(__file__)))
     absolute_path = os.path.join(base_path, path_from_root)
     return absolute_path
 
