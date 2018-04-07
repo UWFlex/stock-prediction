@@ -8,6 +8,7 @@ import utils
 def fetch(indicator, symbol, config):
     '''fetches stock data from api, then outputs as a pandas dataframe'''
 
+    print("fetching indicator " + indicator + " for " + symbol)
     # fetch stock data for each symbol
     dataframe = pd.DataFrame([])
 

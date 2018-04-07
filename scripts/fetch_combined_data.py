@@ -2,6 +2,7 @@
 '''fetches stock data joined with technical indicators'''
 from functools import reduce
 import sys
+import time
 import pandas as pd
 import constants
 import utils
@@ -9,7 +10,7 @@ import fetch_stock
 import fetch_indicators
 
 
-def fetch(symbols_file, indicators_file, output_path):
+def fetch(symbols_file, indicators_file):
     '''fetches stock data combined with technical indicators, output as csv'''
 
     # read from symbols file
@@ -39,12 +40,19 @@ def fetch(symbols_file, indicators_file, output_path):
     }
 
     for stock in stocks:
+        start = time.time()
+
         stock_data = fetch_stock.fetch(stock, stocks_config)
+
+        time.sleep(1)
 
         dfs = []
         dfs.append(stock_data)
         for indicator in indicators:
             indicator_data = fetch_indicators.fetch(indicator, stock, indicators_config)
+
+            time.sleep(1)
+
             dfs.append(indicator_data)
 
         stock_indicators_joined = reduce(
@@ -62,10 +70,15 @@ def fetch(symbols_file, indicators_file, output_path):
         # print(stock_indicators_joined)
 
         print('fetched and joined data for ' + stock)
-        formatted_output_path = utils.format_path(output_path)
-        utils.make_dir_if_not_exists(output_path)
-        stock_indicators_joined.to_csv(formatted_output_path + '/' + stock + '.csv')
+
+        elapsed = time.time() - start
+        print('time elapsed: ' + str(elapsed))
+
+        return stock_indicators_joined
+        # formatted_output_path = utils.format_path(output_path)
+        # utils.make_dir_if_not_exists(output_path)
+        # stock_indicators_joined.to_csv(formatted_output_path + '/' + stock + '.csv')
 
 
 if __name__ == '__main__':
-    fetch(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
+    fetch(str(sys.argv[1]), str(sys.argv[2]))

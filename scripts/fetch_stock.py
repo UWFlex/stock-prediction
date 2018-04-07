@@ -5,9 +5,10 @@ import pandas as pd
 import constants
 import utils
 
-
 def fetch(symbol, config):
     '''fetches stock data from api, return as a pandas dataframe'''
+
+    print('-----fetching stock data for ' + symbol + '-----')
 
     # fetch stock data for a symbol
     param_list = [
