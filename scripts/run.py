@@ -3,13 +3,14 @@ import sys
 import getopt
 import time
 import fetch_combined_data
+import preprocess
 
 def main(argv):
     '''driver method'''
     start = time.time()
 
     try:
-        opts, _ = getopt.getopt(argv, 'ft', ['fetch'])
+        opts, _ = getopt.getopt(argv, 'fp', ['fetch', 'preprocess'])
     except getopt.GetoptError:
         print('run.py')
         sys.exit(2)
@@ -21,7 +22,7 @@ def main(argv):
 
 
     # run pipeline in order according to command line options
-    if '-f' or '--fetch' in single_opt:
+    if '-f' in single_opt or '--fetch' in single_opt:
         print('-----fetching new data-----')
         # fetch
         fetch_combined_data.fetch(
@@ -29,7 +30,14 @@ def main(argv):
             'input/indicators',
             'output/raw'
         )
-
+    if '-p' in single_opt or '--preprocess' in single_opt:
+        print('-----preprocessing data-----')
+        # fetch
+        preprocess.preprocess_batch(
+            'output/raw',
+            'output/preprocessed',
+            0.8
+        )
 
     elapsed = time.time() - start
 

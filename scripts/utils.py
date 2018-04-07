@@ -11,10 +11,10 @@ def format_path(path_from_root) -> str:
     return absolute_path
 
 
-def get_csv_file_list_in_dir(directory) -> list:
+def get_filename_list(path_from_root, suffix) -> list:
     '''generates a list of csv files in given directory'''
-    filenames = os.listdir(directory)
-    return [filename for filename in filenames if filename.endswith('csv')]
+    filenames = os.listdir(format_path(path_from_root))
+    return [filename for filename in filenames if filename.endswith(suffix)]
 
 
 def url_builder(url, params) -> str:

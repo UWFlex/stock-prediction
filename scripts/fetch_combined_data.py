@@ -67,9 +67,6 @@ def fetch(symbols_file, indicators_file, output_path):
 
         stock_indicators_joined.index.name = 'date'
 
-        # last observed carries forward
-        stock_indicators_joined.fillna(method='pad', inplace=True)
-
         # print(stock_indicators_joined)
 
         print('fetched and joined data for ' + stock)
