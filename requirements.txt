@@ -1,4 +1,5 @@
 numpy==1.14.2
+matplotlib==2.1.0
 dask==0.17.2
 pandas==0.22.0
 pylint==1.7.4
