@@ -9,7 +9,6 @@ import utils
 import fetch_stock
 import fetch_indicators
 
-
 def fetch(symbols_file, indicators_file, output_path):
     '''fetches stock data combined with technical indicators, output as csv'''
 

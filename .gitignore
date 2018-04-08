@@ -106,4 +106,4 @@ ENV/
 .history
 
 # generated csv
-output/**/*.csv
+output/

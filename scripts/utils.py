@@ -3,6 +3,7 @@ import os
 from os.path import dirname, abspath
 import urllib.request
 import json
+import shutil
 
 def format_path(path_from_root) -> str:
     '''generates absolute path from relative path'''
@@ -30,6 +31,10 @@ def make_dir_if_not_exists(path_from_root):
     directory = format_path(path_from_root)
     if not os.path.exists(directory):
         os.makedirs(directory)
+
+def remove_dir(path_from_root):
+    '''removes directory'''
+    shutil.rmtree(format_path(path_from_root), ignore_errors=True)
 
 def get_json_from_url(url):
     '''fetch data as json from url'''

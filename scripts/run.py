@@ -5,13 +5,14 @@ import time
 import fetch_combined_data
 import preprocess
 import neural_network
+import evaluate_neural_network
 
 def main(argv):
     '''driver method'''
     start = time.time()
 
     try:
-        opts, _ = getopt.getopt(argv, 'fpn', ['fetch', 'preprocess', 'neuralnetwork'])
+        opts, _ = getopt.getopt(argv, 'fpn', ['fetch', 'preprocess', 'neuralnetwork', 'evalnn'])
     except getopt.GetoptError:
         print('run.py')
         sys.exit(2)
@@ -41,7 +42,18 @@ def main(argv):
         )
     if '-n' in single_opt or '--neuralnetwork' in single_opt:
         print('-----training Neural Network models-----')
-        neural_network.run_train('input/symbols', 'output/preprocessed')
+        neural_network.train_batch(
+            'input/symbols',
+            'output/preprocessed',
+            'output/models'
+        )
+
+    if '--evalnn' in single_opt:
+        print('-----Evaluating Neural Network models-----')
+        evaluate_neural_network.evaluate_batch(
+            'input/symbols',
+            'output/preprocessed/test'
+        )
 
     elapsed = time.time() - start
 
