@@ -1,29 +1,42 @@
 '''trains a neural network model in TensorFlow'''
 import sys
+import time
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from utils import format_path
 
-# pylint: disable=C0103,R0914,E1101,R0915
+# pylint: skip-file
 
-def run(train_data_path, test_data_path):
+def run_train(symbols_file, data_path):
     '''prep data for training'''
-    train_data = pd.read_csv(format_path(train_data_path), index_col='date')
-    test_data = pd.read_csv(format_path(test_data_path), index_col='date')
-    train(train_data, test_data)
+    # read from symbols file
+    symbols = []
+    with open(format_path(symbols_file), 'r') as data:
+        read_data = data.read()
+        symbols = str(read_data).split()
+
+    for symbol in symbols:
+        print('training neural network model for ' + symbol)
+        train_data = pd.read_csv(format_path(data_path + '/train/' + symbol + '.csv'), index_col='date')
+        test_data = pd.read_csv(format_path(data_path + '/test/' + symbol + '.csv'), index_col='date')
+
+        train(train_data, test_data)
+
+        print('training finished for ' + symbol)
 
 def train(data_train, data_test):
     '''trains a neural network'''
+    start_time = time.time()
 
     # Build X and y
-    y_train = data_train[['adjusted']].transpose().values.flatten()
-    data_train.drop(['adjusted'], axis=1)
+    y_train = data_train[['label']].transpose().values.flatten()
+    data_train = data_train.drop(['label'], axis=1)
     X_train = data_train.values
 
-    y_test = data_train[['adjusted']].transpose().values.flatten()
-    data_test.drop(['adjusted'], axis=1)
+    y_test = data_test[['label']].transpose().values.flatten()
+    data_test = data_test.drop(['label'], axis=1)
     X_test = data_test.values
 
     # number of training examples
@@ -35,9 +48,9 @@ def train(data_train, data_test):
     Y = tf.placeholder(dtype=tf.float32, shape=[None])
 
     # Model architecture parameters
-    n_neurons_1 = 128
-    n_neurons_2 = 64
-    n_neurons_3 = 32
+    n_neurons_1 = 64
+    n_neurons_2 = 32
+    n_neurons_3 = 16
     n_target = 1
 
     # Initializers
@@ -80,20 +93,20 @@ def train(data_train, data_test):
     net.run(tf.global_variables_initializer())
 
     # Setup plot
-    # plt.ion()
-    # fig = plt.figure()
-    # ax1 = fig.add_subplot(111)
-    # line1, = ax1.plot(y_test)
-    # line2, = ax1.plot(y_test * 0.5)
-    # plt.show()
+    plt.ion()
+    fig = plt.figure()
+    ax1 = fig.add_subplot(111)
+    line1, = ax1.plot(y_test)
+    line2, = ax1.plot(y_test * 0.5)
+    plt.show()
 
     # Fit neural net
-    batch_size = 256
+    batch_size = 1
     mse_train = []
     mse_test = []
 
     # Run
-    epochs = 10
+    epochs = 20
     for e in range(epochs):
 
         # Shuffle training data
@@ -106,25 +119,35 @@ def train(data_train, data_test):
             start = i * batch_size
             batch_x = X_train[start:start + batch_size]
             batch_y = y_train[start:start + batch_size]
+
             # Run optimizer with batch
             net.run(opt, feed_dict={X: batch_x, Y: batch_y})
 
-            # Show progress
-            if np.mod(i, 50) == 0:
-                # MSE train and test
-                mse_train.append(net.run(mse, feed_dict={X: X_train, Y: y_train}))
-                mse_test.append(net.run(mse, feed_dict={X: X_test, Y: y_test}))
-                print('MSE Train: ', mse_train[-1])
-                print('MSE Test: ', mse_test[-1])
-                # Prediction
-                pred = net.run(out, feed_dict={X: X_test})
-                # line2.set_ydata(pred)
-                # plt.title('Epoch ' + str(e) + ', Batch ' + str(i))
-                # plt.pause(0.01)
+        # MSE train and test
+        mse_train.append(net.run(mse, feed_dict={X: X_train, Y: y_train}))
+        mse_test.append(net.run(mse, feed_dict={X: X_test, Y: y_test}))
+
+        print('Epoch ' + str(e))
+        print('MSE Train: ', mse_train[-1])
+        print('MSE Test: ', mse_test[-1])
+
+        # Prediction
+        pred = net.run(out, feed_dict={X: X_test})
+        line2.set_ydata(pred)
+        plt.title('Epoch ' + str(e) + ', Batch ' + str(i))
+        plt.pause(0.001)
 
     # Print final MSE after Training
+    pred_final = net.run(out, feed_dict={X: X_test})
+    rel_error = abs(np.mean(((pred_final - y_test) / y_test)))
     mse_final = net.run(mse, feed_dict={X: X_test, Y: y_test})
-    print(mse_final)
+    print('Final MSE test: ' + str(mse_final))
+    print('Relative error: ' + str("{:.2%}".format(rel_error)))
+    print('Training set count: ' + str(len(y_train)))
+    print('Test set count: ' + str(len(y_test)))
+
+    elapsed = time.time() - start_time
+    print('time elapsed: ' + str(round(elapsed, 2)) + " seconds")
 
 if __name__ == '__main__':
-    run(str(sys.argv[1]), str(sys.argv[2]))
+    run_train(str(sys.argv[1]), str(sys.argv[2]))

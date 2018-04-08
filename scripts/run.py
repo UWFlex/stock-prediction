@@ -11,7 +11,7 @@ def main(argv):
     start = time.time()
 
     try:
-        opts, _ = getopt.getopt(argv, 'fpn', ['fetch', 'preprocess', 'nn'])
+        opts, _ = getopt.getopt(argv, 'fpn', ['fetch', 'preprocess', 'neuralnetwork'])
     except getopt.GetoptError:
         print('run.py')
         sys.exit(2)
@@ -39,10 +39,9 @@ def main(argv):
             'output/preprocessed',
             0.8
         )
-    if '-n' in single_opt or '--nn' in single_opt:
-        print('-----training Neural Network model-----')
-        # fetch
-        neural_network.train()
+    if '-n' in single_opt or '--neuralnetwork' in single_opt:
+        print('-----training Neural Network models-----')
+        neural_network.run_train('input/symbols', 'output/preprocessed')
 
     elapsed = time.time() - start
 

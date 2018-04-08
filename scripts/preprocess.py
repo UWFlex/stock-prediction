@@ -46,9 +46,17 @@ def split(data, train_ratio):
 
     return data_train, data_test
 
+def construct_label(data):
+    '''appends the label column by shifting it down (1 day ahead)'''
+    data['label'] = data['adjusted']
+    data['label'] = data['label'].shift(-1)
+    return data.drop(data.index[len(data)-1])
+
 
 def preprocess(data, train_ratio):
     '''perform preprocessing on data'''
+
+    data = construct_label(data)
 
     # fill missing values
     data = fill_missing(data)
@@ -80,7 +88,7 @@ def preprocess_batch(input_path, output_path, train_ratio):
         make_dir_if_not_exists(formatted_output + '/test')
         train_data.to_csv(formatted_output + '/train' + '/' + symbol + '.csv')
         test_data.to_csv(formatted_output + '/test' + '/' + symbol + '.csv')
-        print('saved csv files to ' + formatted_output + '{train, test}' + symbol + '.csv')
+        print('saved csv files to ' + formatted_output + '{train, test}/' + symbol + '.csv')
 
     print("preprocessing complete")
     elapsed = time.time() - start
