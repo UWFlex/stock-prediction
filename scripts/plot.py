@@ -13,4 +13,4 @@ def plot_closing_adj(path_to_csv):
     plt.show()
 
 if __name__ == 'main':
-    plot_closing_adj(str(sys.argv[0]))
+    plot_closing_adj(str(sys.argv[1]))

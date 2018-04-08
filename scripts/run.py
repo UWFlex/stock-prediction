@@ -4,13 +4,14 @@ import getopt
 import time
 import fetch_combined_data
 import preprocess
+import neural_network
 
 def main(argv):
     '''driver method'''
     start = time.time()
 
     try:
-        opts, _ = getopt.getopt(argv, 'fp', ['fetch', 'preprocess'])
+        opts, _ = getopt.getopt(argv, 'fpn', ['fetch', 'preprocess', 'nn'])
     except getopt.GetoptError:
         print('run.py')
         sys.exit(2)
@@ -38,6 +39,10 @@ def main(argv):
             'output/preprocessed',
             0.8
         )
+    if '-n' in single_opt or '--nn' in single_opt:
+        print('-----training Neural Network model-----')
+        # fetch
+        neural_network.train()
 
     elapsed = time.time() - start
 
