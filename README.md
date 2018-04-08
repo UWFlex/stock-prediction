@@ -29,7 +29,9 @@ $ python scripts/run.py -f -p -nn
 
 `-p`, `--preprocess`: run the preprocessing job. Data must already exist in `output/raw`. This job creates the label dimension and shifts it one day down. It then splits the data into 80% training and 20% testing sets. After that, a *last observed carried forward* procedure is performed to fill in the missing data. Finally, a `scikit-learn` `MinMaxScaler` is applied to each column to scale the dataset.
 
-`-nn`, `--neuralnetwork`: trains a neural network model for each stock using TensorFlow. Then runs a simply evaluation on the test set to calculate the relative error.
+`-nn`, `--neuralnetwork`: trains a neural network model for each stock using TensorFlow. Then runs a simply evaluation on the test set to calculate the relative error. Models are saved in `output/models`
+
+`--evalnn`: runs evaluation using the test data set. Gives MSE and relative error.
 
 ## Pipeline
 The pipeline consists of the following stages
