@@ -5,4 +5,3 @@ install:
 - pip install -r requirements.txt
 script:
 - pylint scripts/*.py
-- python scripts/run.py
