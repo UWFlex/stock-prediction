@@ -1,4 +1,4 @@
-# Stock Prediction [![Build Status](https://travis-ci.org/UWCESEDUO/stock-prediction.svg?branch=master)](https://travis-ci.org/UWCESEDUO/stock-prediction)
+# Stock Prediction [![Build Status](https://travis-ci.org/UWFlex/stock-prediction.svg?branch=master)](https://travis-ci.org/UWFlex/stock-prediction)
 A complete machine learning data pipeline for training TensorFlow models to forecast stock prices. Written in Python.
 
 Goal: given stock data (`opening`, `closing` and `indicators`), predict next day's `adjusted closing` price
